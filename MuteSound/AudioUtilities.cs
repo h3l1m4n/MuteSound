@@ -11,7 +11,8 @@ namespace MuteSound
     //Credit to https://stackoverflow.com/questions/20938934/controlling-applications-volume-by-process-id
     public class VolumeMixer
     {
-        private const string ProcessName = "TslGame";
+        private static string ProcessName = "EMPTY";
+
 
         internal static float GetGameVolume()
         {
@@ -28,8 +29,10 @@ namespace MuteSound
             return level * 100;
         }
 
-        internal static bool IsGameMuted()
+        internal static bool IsGameMuted(string name)
         {
+            ProcessName = name;
+            Console.WriteLine(name);
             ISimpleAudioVolume volume = GetVolumeObject();
 
             if (volume == null)
@@ -57,8 +60,10 @@ namespace MuteSound
             Marshal.ReleaseComObject(volume);
         }
 
-        internal static void MuteGame(bool mute)
+        internal static void MuteGame(bool mute, string name)
         {
+            ProcessName = name;
+            Console.WriteLine(name);
             ISimpleAudioVolume volume = GetVolumeObject();
 
             if (volume == null)

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -6,63 +9,79 @@ namespace MuteSound
 {
     public partial class FrmMain : Form
     {
+    
+        private const int MOD_CONTROL = 0x0002;
+
+        private const int MOD_SHIFT = 0x0004;
+        private const int WM_HOTKEY = 0x0312;
+        public const int MOD_ALT = 0x0001;
+        private bool _decreased;
+        private const string Filename = "binds.xml";
+        private List<Keybinding> _keyMap;
+
+        public FrmMain()
+        {
+            InitializeComponent();
+            Readconfig();
+            ShowInTaskbar = false;
+        }
+
         [DllImport("user32.dll")]
         public static extern IntPtr FindWindow(string strClassName, string strWindowName);
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out int processId);
-        //All modifier buttons, incase of Configfile in the future.
-        private const int MOD_CONTROL = 0x0002;
-        private const int MOD_SHIFT = 0x0004;
-        private const int WM_HOTKEY = 0x0312;
-        public const int MOD_ALT = 0x0001;
-        private bool decreased = false;
-        public FrmMain()
-        {
-            InitializeComponent();
-           
-            this.ShowInTaskbar = false;
-            SetHotKeys();
-        }
-      
+
         private void button1_Click(object sender, EventArgs e)
         {
-            MuteGame();
+            //MuteGame();
         }
-        private void MuteGame()
+
+        private void MuteGame(string name)
         {
-            if (VolumeMixer.IsGameMuted())
-            {
-                VolumeMixer.MuteGame(false);
-            }
+            if (VolumeMixer.IsGameMuted(name))
+                VolumeMixer.MuteGame(false, name);
             else
+                VolumeMixer.MuteGame(true, name);
+        }
+
+        private void Readconfig()
+        {
+            _keyMap = new List<Keybinding>();
+
+
+            if (File.Exists(Filename))
             {
-                VolumeMixer.MuteGame(true);
+                HelperClass.Deserialize(_keyMap, Filename);
+                SetHotKeys();
             }
         }
 
-        private void readconfig()
-        {
-            //Read out config
-            //Game name, incase it was to be used for another proccess
-            //Such as Hotkeys, Prefferd volumelevels etc.
-        }
         private void DecreaseGame()
         {
-            if (decreased) { VolumeMixer.SetGameVolume(50);
-                decreased = true;
+            if (_decreased)
+            {
+                VolumeMixer.SetGameVolume(50);
+                _decreased = true;
             }
-         
+
             else
-            { 
+            {
                 VolumeMixer.SetGameVolume(100);
-                decreased = false;
+                _decreased = false;
             }
         }
+
         private void SetHotKeys()
         {
-            RegisterHotKey(Handle, 1, MOD_ALT,78);
-            RegisterHotKey(Handle, 2, MOD_ALT, 77);
+            foreach (var bind in _keyMap)
+                RegisterHotKey(Handle, bind.Id, bind.Modifier, bind.Key);
+        }
+
+        private void unregisterHotKeys()
+        {
+            foreach (var bind in _keyMap)
+                UnregisterHotKey(Handle, bind.Id);
         }
 
         [DllImport("user32.dll")]
@@ -73,39 +92,47 @@ namespace MuteSound
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == WM_HOTKEY && (int)m.WParam == 1)
-                try
-                {
-                   MuteGame();
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("WHAT THE FUCK JUST HAPPEND? \n I CANT MUTE THE FUCKING AIRPLANE", @"Error", MessageBoxButtons.OK);
-                }
-            if (m.Msg == WM_HOTKEY && (int)m.WParam == 2)
-                try
-                {
+            if (m.Msg == WM_HOTKEY)
 
-                    DecreaseGame();
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Cant decrease sound", @"Error", MessageBoxButtons.OK);
-                }
+                foreach (var bind in _keyMap)
+                    if ((int) m.WParam == bind.Id)
+                        try
+                        {
+                            MuteGame(bind.ProcessName);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
+
+
             base.WndProc(ref m);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UnregisterHotKey(Handle, 1);
-            System.Windows.Forms.Application.Exit();
+            Application.Exit();
         }
 
         private void kluwertseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.kluwert.se");
+            Process.Start("http://www.kluwert.se");
+        }
+
+        private void configToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var frmConfig = new config())
+            {
+                var result = frmConfig.ShowDialog();
+                if (result == DialogResult.OK)
+                    if (File.Exists(Filename))
+                    {
+                        HelperClass.Deserialize(_keyMap, Filename);
+                        unregisterHotKeys();
+                        SetHotKeys();
+                    }
+            }
         }
     }
-
-
 }

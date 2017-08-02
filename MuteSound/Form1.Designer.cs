@@ -34,6 +34,8 @@
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.kluwertseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.soundMuter11ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.configToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -52,32 +54,49 @@
             // 
             this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "Fuck Airplanes";
+            this.notifyIcon1.Text = "MuteSound";
             this.notifyIcon1.Visible = true;
             // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.kluwertseToolStripMenuItem,
+            this.soundMuter11ToolStripMenuItem,
+            this.configToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(129, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 92);
             // 
             // kluwertseToolStripMenuItem
             // 
+            this.kluwertseToolStripMenuItem.Enabled = false;
             this.kluwertseToolStripMenuItem.Name = "kluwertseToolStripMenuItem";
-            this.kluwertseToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.kluwertseToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.kluwertseToolStripMenuItem.Text = "Kluwert.se";
             this.kluwertseToolStripMenuItem.Click += new System.EventHandler(this.kluwertseToolStripMenuItem_Click);
+            // 
+            // soundMuter11ToolStripMenuItem
+            // 
+            this.soundMuter11ToolStripMenuItem.Enabled = false;
+            this.soundMuter11ToolStripMenuItem.Name = "soundMuter11ToolStripMenuItem";
+            this.soundMuter11ToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.soundMuter11ToolStripMenuItem.Text = "SoundMuter 1.1";
+            // 
+            // configToolStripMenuItem
+            // 
+            this.configToolStripMenuItem.Name = "configToolStripMenuItem";
+            this.configToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.configToolStripMenuItem.Text = "Config";
+            this.configToolStripMenuItem.Click += new System.EventHandler(this.configToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // frmMain
+            // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -87,7 +106,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmMain";
-            this.Text = "Fuck Airplanes";
+            this.Text = "MuteSound";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -101,6 +120,8 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem kluwertseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem configToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem soundMuter11ToolStripMenuItem;
     }
 }
 
