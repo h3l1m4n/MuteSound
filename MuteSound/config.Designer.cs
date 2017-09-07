@@ -40,7 +40,13 @@
             this.btRemove = new System.Windows.Forms.Button();
             this.btRefresh = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.rbMute = new System.Windows.Forms.RadioButton();
+            this.rbDecrease = new System.Windows.Forms.RadioButton();
+            this.numMin = new System.Windows.Forms.NumericUpDown();
+            this.numMax = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numMin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMax)).BeginInit();
             this.SuspendLayout();
             // 
             // lbProcc
@@ -97,7 +103,7 @@
             // 
             // btAdd
             // 
-            this.btAdd.Location = new System.Drawing.Point(141, 171);
+            this.btAdd.Location = new System.Drawing.Point(137, 236);
             this.btAdd.Name = "btAdd";
             this.btAdd.Size = new System.Drawing.Size(111, 24);
             this.btAdd.TabIndex = 3;
@@ -125,7 +131,7 @@
             // 
             // btRemove
             // 
-            this.btRemove.Location = new System.Drawing.Point(141, 201);
+            this.btRemove.Location = new System.Drawing.Point(137, 266);
             this.btRemove.Name = "btRemove";
             this.btRemove.Size = new System.Drawing.Size(111, 24);
             this.btRemove.TabIndex = 6;
@@ -152,11 +158,55 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Processname";
             // 
+            // rbMute
+            // 
+            this.rbMute.AutoSize = true;
+            this.rbMute.Checked = true;
+            this.rbMute.Location = new System.Drawing.Point(137, 171);
+            this.rbMute.Name = "rbMute";
+            this.rbMute.Size = new System.Drawing.Size(49, 17);
+            this.rbMute.TabIndex = 9;
+            this.rbMute.TabStop = true;
+            this.rbMute.Text = "Mute";
+            this.rbMute.UseVisualStyleBackColor = true;
+            // 
+            // rbDecrease
+            // 
+            this.rbDecrease.AutoSize = true;
+            this.rbDecrease.Location = new System.Drawing.Point(187, 171);
+            this.rbDecrease.Name = "rbDecrease";
+            this.rbDecrease.Size = new System.Drawing.Size(71, 17);
+            this.rbDecrease.TabIndex = 10;
+            this.rbDecrease.TabStop = true;
+            this.rbDecrease.Text = "Decrease";
+            this.rbDecrease.UseVisualStyleBackColor = true;
+            this.rbDecrease.CheckedChanged += new System.EventHandler(this.rbDecrease_CheckedChanged);
+            // 
+            // numMin
+            // 
+            this.numMin.Enabled = false;
+            this.numMin.Location = new System.Drawing.Point(137, 194);
+            this.numMin.Name = "numMin";
+            this.numMin.Size = new System.Drawing.Size(38, 20);
+            this.numMin.TabIndex = 11;
+            // 
+            // numMax
+            // 
+            this.numMax.Enabled = false;
+            this.numMax.Location = new System.Drawing.Point(204, 194);
+            this.numMax.Name = "numMax";
+            this.numMax.Size = new System.Drawing.Size(38, 20);
+            this.numMax.TabIndex = 12;
+            // 
             // config
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(419, 323);
+            this.Controls.Add(this.numMax);
+            this.Controls.Add(this.numMin);
+            this.Controls.Add(this.rbDecrease);
+            this.Controls.Add(this.rbMute);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btRefresh);
             this.Controls.Add(this.btRemove);
@@ -169,6 +219,8 @@
             this.Name = "config";
             this.Text = "config";
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numMin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMax)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -188,5 +240,9 @@
         private System.Windows.Forms.Button btRemove;
         private System.Windows.Forms.Button btRefresh;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.RadioButton rbMute;
+        private System.Windows.Forms.RadioButton rbDecrease;
+        private System.Windows.Forms.NumericUpDown numMin;
+        private System.Windows.Forms.NumericUpDown numMax;
     }
 }

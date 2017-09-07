@@ -14,8 +14,9 @@ namespace MuteSound
         private static string ProcessName = "EMPTY";
 
 
-        internal static float GetGameVolume()
+        internal static float GetGameVolume(string name)
         {
+            ProcessName = name;
             ISimpleAudioVolume volume = GetVolumeObject();
 
             if (volume == null)
@@ -46,8 +47,9 @@ namespace MuteSound
             return mute;
         }
 
-        internal static void SetGameVolume(float level)
+        internal static void SetGameVolume(float level, string name)
         {
+            ProcessName = name;
             ISimpleAudioVolume volume = GetVolumeObject();
 
             if (volume == null)

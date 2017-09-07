@@ -88,7 +88,14 @@ namespace MuteSound
                 lvitem.SubItems.Add(ModifierConverter(modkey) + " + " + (char) charkey);
                 lvBinds.Items.Add(lvitem);
 
-                loadedKeyMap.Add(new Keybinding(loadedKeyMap.Count + 1, charkey, modkey, tbProcc.Text));
+                if (rbDecrease.Checked)
+                {
+                    loadedKeyMap.Add(new Keybinding(loadedKeyMap.Count + 1, charkey, modkey, tbProcc.Text, (int)numMin.Value, (int)numMax.Value));
+
+                }
+                else
+                    loadedKeyMap.Add(new Keybinding(loadedKeyMap.Count + 1, charkey, modkey, tbProcc.Text));
+
 
                 HelperClass.SerializeObject(loadedKeyMap, "binds.xml");
                 modkey = 0;
@@ -149,6 +156,20 @@ namespace MuteSound
         {
             lbProcc.Items.Clear();
             loadProcesses();
+        }
+
+        private void rbDecrease_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbDecrease.Checked)
+            {
+                numMax.Enabled = true;
+                numMin.Enabled = true;
+            }
+            else
+            {
+                numMax.Enabled = false;
+                numMin.Enabled = false;
+            }
         }
     }
 }

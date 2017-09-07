@@ -22,8 +22,9 @@ namespace MuteSound
         public FrmMain()
         {
             InitializeComponent();
-            Readconfig();
+           
             ShowInTaskbar = false;
+            Readconfig();
         }
 
         [DllImport("user32.dll")]
@@ -57,20 +58,7 @@ namespace MuteSound
             }
         }
 
-        private void DecreaseGame()
-        {
-            if (_decreased)
-            {
-                VolumeMixer.SetGameVolume(50);
-                _decreased = true;
-            }
 
-            else
-            {
-                VolumeMixer.SetGameVolume(100);
-                _decreased = false;
-            }
-        }
 
         private void SetHotKeys()
         {
@@ -98,7 +86,22 @@ namespace MuteSound
                     if ((int) m.WParam == bind.Id)
                         try
                         {
-                            MuteGame(bind.ProcessName);
+                            
+                            if (bind.Min == -1 && bind.Max == -1)
+                                MuteGame(bind.ProcessName);
+
+                            else
+                            {
+                         
+                                if ((int)VolumeMixer.GetGameVolume(bind.ProcessName) == bind.Min)
+                                {
+                                      VolumeMixer.SetGameVolume(bind.Max, bind.ProcessName);
+                                }
+                                else
+                                {
+                                    VolumeMixer.SetGameVolume(bind.Min, bind.ProcessName);
+                                }
+                            }
                         }
                         catch (Exception e)
                         {
